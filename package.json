@@ -1,0 +1,15 @@
+{
+    "name": "crud-api",
+    "version": "1.0.0",
+    "description": "Node API 1 Project",
+    "private": true,
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hmerritt/node-api1-project.git"
+    },
+    "devDependencies": {},
+	"dependencies": {
+		"express": "4.17.1"
+	}
+}
