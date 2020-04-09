@@ -1,9 +1,21 @@
-const fs      = require("fs");
 const express = require("express");
+const shortid = require("shortid");
+const db      = require("./database");
 
 
 //  Create http server
 const server = express();
+
+
+//  Show hello message
+server.get("/", (req, res) => {
+	res.json({ message: "hello world!" })
+})
+
+//  All users
+server.get("/api/users", (req, res) => {
+    res.json(db.users);
+});
 
 
 //  Expose port 8000
