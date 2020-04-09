@@ -28,7 +28,7 @@ server.get("/api/users", (req, res) => {
     }
     else {
         res.status(500).json({
-            message: "There was an error while saving the user to the database."
+            message: "The users information could not be retrieved."
         });
     }
 });
@@ -37,7 +37,7 @@ server.get("/api/users", (req, res) => {
 //  Create new user
 server.post("/api/users", (req, res) => {
     //  Check request contains correct post data
-    if (!req.body.name) {
+    if (!req.body.name || !req.body.bio) {
 		return res.status(400).json({
 			errorMessage: "Please provide name and bio for the user.",
 		})
@@ -48,6 +48,12 @@ server.post("/api/users", (req, res) => {
         name: req.body.name,
         bio: req.body.bio
     });
+
+    if (!newUser) {
+        return res.status(500).json({
+            errorMessage: "There was an error while saving the user to the database."
+        });
+    }
 
     //  Return new user
     res.status(201).json(newUser)
@@ -72,24 +78,57 @@ server.get("/api/users/:id", (req, res) => {
 //  Delete user
 server.delete("/api/users/:id", (req, res) => {
     const userId = req.params.id;
+    const user = db.getUserById(userId);
+
+    if (!user) {
+        return res.status(404).json({
+            message: "The user with the specified ID does not exist."
+        });
+    }
 
     //  Delete user
     const deletedUser = db.deleteUser(userId);
 
+    if (!deletedUser) {
+        return res.status(500).json({
+            errorMessage: "The user could not be removed."
+        });
+    }
+
     //  Return deleted user
-    res.status(201).json(deletedUser)
+    res.status(200).json(deletedUser)
 });
 
 
 //  Update user
 server.patch("/api/users/:id", (req, res) => {
     const userId = req.params.id;
+    const user = db.getUserById(userId);
+
+    if (!user) {
+        return res.status(404).json({
+            message: "The user with the specified ID does not exist."
+        });
+    }
+
+    //  Check request contains correct post data
+    if (!req.body.name || !req.body.bio) {
+		return res.status(400).json({
+			errorMessage: "Please provide name and bio for the user.",
+		})
+	}
 
     //  Update user
-    updatedUser = db.updateUser(userId, req.body)
+    updatedUser = db.updateUser(userId, req.body);
+
+    if (!updatedUser) {
+        return res.status(500).json({
+            errorMessage: "The user information could not be modified."
+        });
+    }
 
     //  Return deleted user
-    res.status(201).json(updatedUser)
+    res.status(200).json(updatedUser)
 });
 
 
