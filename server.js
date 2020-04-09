@@ -16,17 +16,24 @@ server.get("/", (req, res) => {
 })
 
 
-//  All users
+//  Get all users
 server.get("/api/users", (req, res) => {
     res.json(db.users);
 });
 
 
-//  All users
+//  Get individual user by id
 server.get("/api/users/:id", (req, res) => {
-    res.json(
-        db.getUserById(req.params.id)
-    );
+    const user = db.getUserById(req.params.id);
+
+    if (user) {
+        res.json(user);
+    }
+    else {
+        res.status(404).json({
+            message: "User not found"
+        });
+    }
 });
 
 
