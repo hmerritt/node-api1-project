@@ -34,6 +34,26 @@ server.get("/api/users", (req, res) => {
 });
 
 
+//  Create new user
+server.post("/api/users", (req, res) => {
+    //  Check request contains correct post data
+    if (!req.body.name) {
+		return res.status(400).json({
+			errorMessage: "Please provide name and bio for the user.",
+		})
+	}
+
+    //  Add user
+    const newUser = db.addUser({
+        name: req.body.name,
+        bio: req.body.bio
+    });
+
+    //  Return new user
+    res.status(201).json(newUser)
+});
+
+
 //  Get individual user by id
 server.get("/api/users/:id", (req, res) => {
     const user = db.getUserById(req.params.id);
@@ -61,23 +81,15 @@ server.delete("/api/users/:id", (req, res) => {
 });
 
 
-//  Create new user
-server.post("/api/users", (req, res) => {
-    //  Check request contains correct post data
-    if (!req.body.name) {
-		return res.status(400).json({
-			errorMessage: "Please provide name and bio for the user.",
-		})
-	}
+//  Update user
+server.patch("/api/users/:id", (req, res) => {
+    const userId = req.params.id;
 
-    //  Add user
-    const newUser = db.addUser({
-        name: req.body.name,
-        bio: req.body.bio
-    });
+    //  Update user
+    updatedUser = db.updateUser(userId, req.body)
 
-    //  Return new user
-    res.status(201).json(newUser)
+    //  Return deleted user
+    res.status(201).json(updatedUser)
 });
 
 

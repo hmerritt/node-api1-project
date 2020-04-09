@@ -19,6 +19,12 @@ function getUsers() {
 }
 
 
+//  Get a user by their id
+function getUserById(id) {
+    return users.find(user => user.id === id)
+}
+
+
 //  Generate user schema
 function genUserSchema(user) {
     return {
@@ -48,17 +54,27 @@ function deleteUser(id) {
     deletedUser = getUserById(id);
 
     //  Delete user from users
-    users = users.filter(user => user.id != id);
+    users = users.filter(user => user.id !== id);
 
     //  Return deleted user
     return deletedUser;
 }
 
 
-//  Get a user by their id
-function getUserById(id) {
-    return users.find(user => user.id === id)
-};
+//  Delete user (by id)
+function updateUser(id, user) {
+    //  Get users index in array
+    const index = users.findIndex(user => user.id === id);
+
+    //  Update user
+    users[index] = {
+        ...users[index],
+        ...user
+    }
+
+    //  Return updated user
+    return users[index];
+}
 
 
 //------------------------------------------------------------------------------
@@ -67,8 +83,9 @@ function getUserById(id) {
 //  Exports
 module.exports = {
     getUsers,
+    getUserById,
     genUserSchema,
     addUser,
     deleteUser,
-    getUserById
+    updateUser
 };
