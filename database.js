@@ -2,7 +2,7 @@ const shortid = require("shortid");
 
 
 //  Users array
-let users = [
+const users = [
     {
       id: shortid.generate(), // hint: use the shortid npm package to generate it
       name: "Jane Doe", // String, required
@@ -10,6 +10,15 @@ let users = [
     }
 ]
 
+
+//  Get a user by their id
+const getUserById = (id) => {
+    return users.find(user => user.id === id)
+};
+
+
+//  Exports
 module.exports = {
-    users
+    users,
+    getUserById
 };

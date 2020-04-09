@@ -17,6 +17,13 @@ server.get("/api/users", (req, res) => {
     res.json(db.users);
 });
 
+//  All users
+server.get("/api/users/:id", (req, res) => {
+    res.json(
+        db.getUserById(req.params.id)
+    );
+});
+
 
 //  Expose port 8000
 const port = 8000;
