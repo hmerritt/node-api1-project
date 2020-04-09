@@ -6,6 +6,9 @@ const db      = require("./database");
 //  Create http server
 const server = express();
 
+//  
+server.use(express.json());
+
 
 //------------------------------------------------------------------------------
 
@@ -18,7 +21,16 @@ server.get("/", (req, res) => {
 
 //  Get all users
 server.get("/api/users", (req, res) => {
-    res.json(db.users);
+    const users = db.users;
+
+    if (users) {
+        res.json(users);
+    }
+    else {
+        res.status(500).json({
+            message: "There was an error while saving the user to the database."
+        });
+    }
 });
 
 
@@ -31,9 +43,28 @@ server.get("/api/users/:id", (req, res) => {
     }
     else {
         res.status(404).json({
-            message: "User not found"
+            message: "The user with the specified ID does not exist."
         });
     }
+});
+
+
+//  Create new user
+server.post("/api/users", (req, res) => {
+    //  Check request contains correct post data
+    if (!req.body.name) {
+		return res.status(400).json({
+			errorMessage: "Please provide name and bio for the user.",
+		})
+	}
+
+    //  Add user
+    const newUser = db.addUser({
+        name: req.body.name,
+        bio: req.body.bio
+    });
+
+    res.status(201).json(newUser)
 });
 
 

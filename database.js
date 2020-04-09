@@ -25,9 +25,14 @@ function genUserSchema(user) {
 
 //  Add a user
 function addUser(user) {
-    users.push(
-        genUserSchema(user)
-    );
+    //  Create new user object
+    const newUser = genUserSchema(user);
+
+    // Add new user to users array
+    users.push(newUser);
+
+    // Return the new user object
+    return newUser;
 }
 
 
