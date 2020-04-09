@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/hmerritt/node-api1-project.git"
+        "url": "https://github.com/hmerritt/node-api1-project.git"
     },
     "devDependencies": {
         "nodemon": "^2.0.3"
