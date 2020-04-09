@@ -6,7 +6,7 @@ const db      = require("./database");
 //  Create http server
 const server = express();
 
-//  
+//
 server.use(express.json());
 
 
@@ -21,7 +21,7 @@ server.get("/", (req, res) => {
 
 //  Get all users
 server.get("/api/users", (req, res) => {
-    const users = db.users;
+    const users = db.getUsers();
 
     if (users) {
         res.json(users);
@@ -49,6 +49,18 @@ server.get("/api/users/:id", (req, res) => {
 });
 
 
+//  Delete user
+server.delete("/api/users/:id", (req, res) => {
+    const userId = req.params.id;
+
+    //  Delete user
+    const deletedUser = db.deleteUser(userId);
+
+    //  Return deleted user
+    res.status(201).json(deletedUser)
+});
+
+
 //  Create new user
 server.post("/api/users", (req, res) => {
     //  Check request contains correct post data
@@ -64,6 +76,7 @@ server.post("/api/users", (req, res) => {
         bio: req.body.bio
     });
 
+    //  Return new user
     res.status(201).json(newUser)
 });
 

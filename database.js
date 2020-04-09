@@ -2,7 +2,7 @@ const shortid = require("shortid");
 
 
 //  Users array
-const users = [
+let users = [
     genUserSchema({
         name: "Jane Doe",
         bio: "Not Tarzan's Wife, another Jane",
@@ -11,6 +11,12 @@ const users = [
 
 
 //------------------------------------------------------------------------------
+
+
+//  Get all users
+function getUsers() {
+    return users;
+}
 
 
 //  Generate user schema
@@ -36,6 +42,19 @@ function addUser(user) {
 }
 
 
+//  Delete user (by id)
+function deleteUser(id) {
+    //  Get user object to delete
+    deletedUser = getUserById(id);
+
+    //  Delete user from users
+    users = users.filter(user => user.id != id);
+
+    //  Return deleted user
+    return deletedUser;
+}
+
+
 //  Get a user by their id
 function getUserById(id) {
     return users.find(user => user.id === id)
@@ -47,8 +66,9 @@ function getUserById(id) {
 
 //  Exports
 module.exports = {
-    users,
+    getUsers,
     genUserSchema,
     addUser,
+    deleteUser,
     getUserById
 };
