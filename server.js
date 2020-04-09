@@ -1,5 +1,6 @@
 const express = require("express");
 const shortid = require("shortid");
+const cors    = require("cors");
 const db      = require("./database");
 
 
@@ -8,6 +9,7 @@ const server = express();
 
 //
 server.use(express.json());
+server.use(cors());
 
 
 //------------------------------------------------------------------------------
