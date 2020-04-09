@@ -7,15 +7,20 @@ const db      = require("./database");
 const server = express();
 
 
+//------------------------------------------------------------------------------
+
+
 //  Show hello message
 server.get("/", (req, res) => {
 	res.json({ message: "hello world!" })
 })
 
+
 //  All users
 server.get("/api/users", (req, res) => {
     res.json(db.users);
 });
+
 
 //  All users
 server.get("/api/users/:id", (req, res) => {
@@ -23,6 +28,9 @@ server.get("/api/users/:id", (req, res) => {
         db.getUserById(req.params.id)
     );
 });
+
+
+//------------------------------------------------------------------------------
 
 
 //  Expose port 8000
