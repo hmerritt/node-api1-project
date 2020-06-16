@@ -1,0 +1,21 @@
+{
+    "name": "crud-api",
+    "version": "1.0.0",
+    "description": "Node API 1 Project",
+    "private": true,
+    "scripts": {
+        "server": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hmerritt/node-api1-project.git"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.3"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "4.17.1",
+        "shortid": "^2.2.15"
+    }
+}
